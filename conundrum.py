@@ -28,8 +28,7 @@ def fetch(id, name, user):
             data['post']= content['files'][f]['content']
             data['url']= content['files'][f]['raw_url']
             data['title']= content['files'][f]['filename']
-        elif content['files'][f]['filename']=='tags':
-            data['tags']= content['files'][f]['content']
+            data['author']= content['user']['login']
     with open(base+name+'.yaml', 'w') as post:
         dump(data, post)
     with open(base+'first', 'w') as f:
@@ -62,29 +61,32 @@ def blog(name):
     except IOError:
         return False
     post= markdown(data['post'], ['codehilite'])
-    return post, data['date'], data['tags']
+    return post, data['date']
     
 
 def archive():
     try:
         with open(base+'archive.md', 'r') as f:
-            data= f.readlines().rstrip()
+            data= f.readlines()
         arch= ''.join(data[::-1])
         return markdown(arch)
     except IOError:
         return False
 
-def operate():
-    opts= ['-p', '-u']
+def operate(*args):
+    opts= {'-p': 4, '-u': 3}
     keys= ['title', 'id']
-    if argv[1] not in opts:
+    if args[0] not in opts:
         print 'Invalid options'
-        return
+        return False
+    if len(args)!=opts[args[0]]:
+        print 'Invalid arguments'
+        return False
     payload= {}
-    for key, value in zip(keys, argv[3:]):
+    for key, value in zip(keys, args[2:]):
         payload[key]= value
-    req= post(argv[2], data=payload, headers={'user-agent': 'conundrum-operator'})
+    req= post(args[1], data=payload, headers={'user-agent': 'conundrum-operator'})
     print req.status_code
 
 if __name__=='__main__':
-    operate()
+    operate(*argv[1:])
