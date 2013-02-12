@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Framework agnostic blog generator in Python
 
@@ -17,7 +17,7 @@ from os import getcwd
 base= getcwd()+'/posts/'
 
 def fetch(id, name, user):
-    gist= get('http://api.github.com/gists/', headers={'user-agent': 'conundrum-blog-engine'})
+    gist= get('http://api.github.com/gists/'+id, headers={'user-agent': 'conundrum-blog-framework'})
     if user!= content['user']['login'] or gist.status_code!=200:
         return False
     content= loads(gist)
@@ -74,8 +74,9 @@ def archive():
         return False
 
 def operate(*args):
-    opts= {'-p': 4, '-u': 3}
-    keys= ['title', 'id']
+    opts= ['-p', '-u']
+    keys= ['title', 'id', 'auth']
+    headers= {'User-Agent': 'conundrum-operator', 'Content-Type': 'text/plain'}
     if args[0] not in opts:
         print 'Invalid options'
         return False
@@ -85,7 +86,7 @@ def operate(*args):
     payload= {}
     for key, value in zip(keys, args[2:]):
         payload[key]= value
-    req= post(args[1], data=payload, headers={'user-agent': 'conundrum-operator'})
+    req= post(args[1], data=payload, headers= headers)
     print req.status_code
 
 if __name__=='__main__':
