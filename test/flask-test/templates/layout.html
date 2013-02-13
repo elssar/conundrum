@@ -1,8 +1,9 @@
 <!doctype html>
     <head>
         <title>Conundrum Test - {{ title }}</title>
-        <link rel="stylesheet" type="text/css" href="{{css_url}}">
-        <link rel="shortcut icon" href="{{ico_url}}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename= 'native.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename= 'favicon.ico') }}">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>

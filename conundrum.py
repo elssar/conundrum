@@ -11,7 +11,7 @@ from yaml import load, dump
 from sys import path, argv
 from datetime import datetime
 from requests import get, post
-from json import loads
+from json import loads, dumps
 from os import getcwd
 
 base= getcwd()+'/posts/'
@@ -74,19 +74,17 @@ def archive():
         return False
 
 def operate(*args):
-    opts= ['-p', '-u']
+    opts= ['-p' , '-u']
     keys= ['title', 'id', 'auth']
-    headers= {'User-Agent': 'conundrum-operator', 'Content-Type': 'text/plain'}
+    headers= {'User-Agent': 'conundrum-operator', 'Content-Type': 'application/json'}
     if args[0] not in opts:
         print 'Invalid options'
-        return False
-    if len(args)!=opts[args[0]]:
-        print 'Invalid arguments'
         return False
     payload= {}
     for key, value in zip(keys, args[2:]):
         payload[key]= value
-    req= post(args[1], data=payload, headers= headers)
+    body= dumps(payload)
+    req= post(args[1], data= body, headers= headers)
     print req.status_code
 
 if __name__=='__main__':
