@@ -16,7 +16,7 @@ And to display -
 
 *For now it is possible to fetch post only from public gists. Support for more services will be added later.
 
-## Usage -
+## Usage
 
   - Make sure you have a folder named **posts** in your application directory.
   - Create a public gist in markdown format as your post
@@ -37,6 +37,12 @@ And to display -
       - `gist_id` is required only when you're creating a new post
       - `auth` is optional, you can use it to send authentication
     - This function is pretty basic, and it would be much better, and easier to create one of your own
+
+## Requires
+
+  - [requests](http://docs.python-requests.org/en/latest/index.html)
+  - [Markdown](http://pythonhosted.org/Markdown/)
+  - [PyYaml](http://pyyaml.org/)
 
 ## To Do
 
