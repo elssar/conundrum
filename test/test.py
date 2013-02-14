@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import conundrum
-from sys import args
+from sys import argv
 from requests import post
 from json import dumps
 
@@ -9,12 +9,15 @@ gists= ['4760090', '4760103', '4760320']
 
 def stand_alone():
     for i, gist in enumerate(gists):
-        print conundrum.fetch(gist, `i`, 'elssar')
+        print conundrum.fetch(gist, `i+1`, 'elssar')
     print conundrum.archive()
     for i in xrange(1, 4):
         blog= conundrum.blog(`i`)
-        print blog[1]
-        print blog[0]
+        if blog:
+            print blog[1]
+            print blog[0]
+        else:
+            print blog
     print conundrum.update('1')
 
 def test_local(port):
@@ -25,9 +28,9 @@ def test_local(port):
         print res.content
 
 if __name__=='__main__':
-    if len(args)==1:
+    if len(argv)==1:
         stand_alone()
-    elif len(args)==2 and args[1].isdigit():
-        test_local(args[1])
+    elif len(argv)==2 and argv[1].isdigit():
+        test_local(argv[1])
     else:
         print 'Usage -\npython test.py <port>\n'

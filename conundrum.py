@@ -12,15 +12,15 @@ from sys import path, argv
 from datetime import datetime
 from requests import get, post
 from json import loads, dumps
-from os import getcwd
+import os
 
-base= getcwd()+'/posts/'
+base= os.path.dirname(os.path.realpath(__file__))+'/posts/'
 
 def fetch(id, name, user):
-    gist= get('http://api.github.com/gists/'+id, headers={'user-agent': 'conundrum-blog-framework'})
+    gist= get('https://api.github.com/gists/'+id, headers={'user-agent': 'conundrum-blog-framework'})
+    content= loads(gist.content)
     if user!= content['user']['login'] or gist.status_code!=200:
         return False
-    content= loads(gist)
     data= {'date': datetime.now().strftime('%B %d, %Y')}
     data['description']= content['description']
     for f in content['files']:
@@ -35,6 +35,7 @@ def fetch(id, name, user):
         f.write(name+'.yaml')
     with open(base+'archive.md', 'a') as archive:
         line= ' - [{0}]({1})   ({2})\n'.format(data['title'], name, data['date'])
+        archive.write(line)
     return True
 
 def update(name):
