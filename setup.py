@@ -3,7 +3,7 @@
 from setuptools import setup
 import os
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md') as readme:
+with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     ld= readme.read()
 
 setup(name= 'conundrum',
