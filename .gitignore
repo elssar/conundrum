@@ -2,4 +2,4 @@
 archive.md
 *.pyc
 /dist/
-*.egg-info
+/conundrum.egg-info/
