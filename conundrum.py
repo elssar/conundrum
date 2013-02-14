@@ -1,6 +1,20 @@
 #!/usr/bin/env python
-#
-# Framework agnostic blog generator in Python
+
+"""
+conundrum - a web framework agnostic blogging plugin in Python
+
+The idea is pretty simple. To make a new post -
+  - Fetch a public gist* from github, with a markdown file
+  - Save as markdown text in a yaml file with other info like date
+  - Keep a file with the name of the newest post
+  - Maintain an archive
+
+And to display -
+  - Archive is returned as html
+  - Blog post is returned as html if name is given, else the newest post is returned
+
+* - For now it is possible to fetch post only from public gists. Support for more services will be added later.
+"""
 
 __author__= 'elssar <elssar@altrawcode.com>'
 __license__= 'MIT'
@@ -12,9 +26,8 @@ from sys import path, argv
 from datetime import datetime
 from requests import get, post
 from json import loads, dumps
-import os
 
-base= os.path.dirname(os.path.realpath(__file__))+'/posts/'
+base= path[0]+'/posts/'
 
 def fetch(id, name, user):
     gist= get('https://api.github.com/gists/'+id, headers={'user-agent': 'conundrum-blog-framework'})
@@ -52,7 +65,7 @@ def update(name):
         dump(data, f)
     return True
 
-def blog(name):
+def blog(name=None):
     try:
         if name is None:
             with open(base+'first', 'w') as f:
