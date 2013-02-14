@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 from sys import path
 
 setup(name= 'conundrum',
@@ -9,9 +9,9 @@ setup(name= 'conundrum',
     author_email= 'elssar@altrawcode.com',
     py_modules= ['conundrum'],
     url= 'https://github.com/elssar/conundrum',
-    licence= 'MIT',
+    license= 'MIT',
     description= 'A framework agnostic blog generator.',
-    long_description= open(path[0]+'/README.md').read(),
+    long_description= open(path[0]+'/README.md', 'r').read(),
     install_requires= [
         'PyYAML >= 3.0.9',
         'Markdown >= 2.2.0',

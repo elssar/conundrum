@@ -3,7 +3,7 @@
 # Framework agnostic blog generator in Python
 
 __author__= 'elssar <elssar@altrawcode.com>'
-__license__= 'BSD License'
+__license__= 'MIT'
 __version__= '0.1.0'
 
 from markdown import markdown
