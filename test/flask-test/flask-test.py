@@ -9,11 +9,16 @@ app= Flask(__name__)
 
 @app.route('/')
 def index():
+    return 'Hello'
+
+@app.route('/archive')
+def arch():
     archive= conundrum.archive()
     return render_template('layout.html', date= datetime.now().strftime('%B %d, %Y'), post=archive)
 
-@app.route('/<post>')
-def show_post():
+@app.route('/blog')
+@app.route('/blog/<post>')
+def show_post(post=None):
     blog= conundrum.blog(post)
     if blog:
         return render_template('layout.html', date= blog[1], post= blog[0])
